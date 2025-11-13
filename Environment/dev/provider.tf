@@ -2,13 +2,20 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "4.46.0"
+      version = "4.50.0"
     }
   }
 }
 
 provider "azurerm" {
   # Configuration options
-  features {}
-  subscription_id = "b654dee9-19f3-4d87-b356-568e22f79a25"
+  features {
+    key_vault {
+      purge_soft_delete_on_destroy    = true
+      recover_soft_deleted_key_vaults = true
+    }
+  }
+
+  # Use optional variable. If empty, provider will use env/CLI credentials.
+  subscription_id = var.subscription_id != "" ? var.subscription_id : null
 }
