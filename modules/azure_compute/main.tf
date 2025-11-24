@@ -19,8 +19,8 @@ resource "azurerm_linux_virtual_machine" "vm" {
   resource_group_name = each.value.rg_name
   location            = each.value.location
   size                = each.value.vm_size
-  admin_username      = data.azurerm_key_vault_secret[each.key].vm_username.value
-  admin_password      = data.azurerm_key_vault_secret[each.key].vm_password.value
+  admin_username      = data.azurerm_key_vault_secret[each.key].secret1.value
+  admin_password      = data.azurerm_key_vault_secret[each.key].secret2.value
   tags                = each.value.tags
   custom_data = filebase64("${path.module}/ngnix.sh")
   disable_password_authentication = "false"
