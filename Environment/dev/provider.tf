@@ -16,6 +16,6 @@ provider "azurerm" {
     }
   }
 
-  # Use optional variable. If empty, provider will use env/CLI credentials.
-  subscription_id = var.subscription_id != "" ? var.subscription_id : null
+  # Use variable directly; set to null to let provider fall back to env/CLI credentials.
+  subscription_id = var.subscription_id
 }

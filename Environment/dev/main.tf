@@ -25,8 +25,8 @@ module "compute" {
 #  The module at module.key_vault is a legacy module which contains its own local provider configurations, and so calls to it may not use
 # │ the count, for_each, or depends_on arguments.
 
-# module "key_vault" {
-#   source = "../../modules/azure_key_vault"
-#   kvs    = var.kvs
-#   depends_on = [module.resource_group]
-# }
+module "key_vault" {
+  source = "../../modules/azure_key_vault"
+  kvs    = var.kvs
+  depends_on = [module.resource_group]
+}

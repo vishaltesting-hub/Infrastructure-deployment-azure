@@ -114,6 +114,16 @@ kvs = {
       Environment = "Dev"
       Project     = "infrastructure deployment"
     }
+    secrets = {
+      secret1= {
+        name  = "vm_username"
+        value = "dev-vm-user"
+      }
+      secret2= {
+        name  = "vm_password"
+        value = "P@ssword1234"
+    }
+  }
   }
 
 } 

@@ -76,7 +76,6 @@ variable "kvs" {
 }
 
 variable "subscription_id" {
-  description = "Optional Azure subscription id. Leave empty to use environment/CLI credentials (ARM_SUBSCRIPTION_ID or `az login`)."
-  type        = string
+  description = "Optional Azure subscription id. Set to null or omit to use environment/CLI credentials (ARM_SUBSCRIPTION_ID or `az login`)."
   default     = "6dbc33a2-5da4-4090-8ac2-b8dde7d2a834"
 }
