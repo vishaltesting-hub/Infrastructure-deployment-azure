@@ -1,28 +1,24 @@
-# provider "azurerm" {
-#   # Configuration options
-#   features {
-#     key_vault {
-#       purge_soft_delete_on_destroy    = true
-#       recover_soft_deleted_key_vaults = true
-#     }
-#     }
-# }
-data "azurerm_client_config" "current" {
+# get current tenant / object id
+data "azurerm_client_config" "current" {}
 
-}
+# key vaults
 resource "azurerm_key_vault" "kv" {
-  for_each                 = var.kvs
-  name                     = each.value.name
-  location                 = each.value.location
-  resource_group_name      = each.value.rg_name
-  sku_name                 = each.value.sku_name
-  tenant_id                = data.azurerm_client_config.current.tenant_id
-  purge_protection_enabled = "false"
-  tags                     = each.value.tags
+  for_each = var.kvs
 
+  name                        = each.value.name
+  location                    = each.value.location
+  resource_group_name         = each.value.resource_group_name
+  sku_name                    = each.value.sku_name
+  tenant_id                   = data.azurerm_client_config.current.tenant_id
+  soft_delete_retention_days  = lookup(each.value, "soft_delete_retention_days", 7)
+  purge_protection_enabled    = lookup(each.value, "purge_protection_enabled", false)
+  tags                        = try(each.value.tags, {})
+
+  # default access policy: current principal (useful for automation)
   access_policy {
     tenant_id = data.azurerm_client_config.current.tenant_id
     object_id = data.azurerm_client_config.current.object_id
+
     key_permissions = [
       "Get",
       "List",
@@ -31,8 +27,9 @@ resource "azurerm_key_vault" "kv" {
       "Delete",
       "Recover",
       "Backup",
-      "Restore"
+      "Restore",
     ]
+
     secret_permissions = [
       "Get",
       "List",
@@ -40,12 +37,10 @@ resource "azurerm_key_vault" "kv" {
       "Delete",
       "Recover",
       "Backup",
-      "Restore"
+      "Restore",
     ]
-    storage_permissions = [
-        "Get",
-        ]  
-    }
 
+    storage_permissions = ["Get", "List", "Set", "Delete", "Recover", "Backup", "Restore"]
+    
+  }
 }
-

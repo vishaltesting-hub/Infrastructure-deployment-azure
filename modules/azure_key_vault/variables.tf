@@ -1,16 +1,18 @@
 variable "kvs" {
-# type = map(object({
-#     name                     = string
-#     location                 = string
-#     rg_name                  = string
-#     sku_name                 = string
-#     purge_protection_enabled = bool
-#     tags                     = optional(map(string))
-#     access_policys            = optional(list(object({
-#         tenant_id           = string
-#         object_id           = string
-#         key_permissions     = list(string)
-#         secret_permissions  = list(string)
-#     })))
-#   }))
+  description = "Map of Key Vault definitions; each value can include 'secrets' map for creation."
+  type = map(object({
+    name                        = string
+    resource_group_name         = string
+    location                    = string
+    sku_name                    = string
+    tags                        = optional(map(string))
+    purge_protection_enabled    = optional(bool, false)
+    soft_delete_retention_days  = optional(number, 7)
+    storage_permissions         = optional(list(string), [])
+    # secrets is a map of objects with name & value
+    secrets = optional(map(object({
+      name  = string
+      value = string
+    })), {})
+  }))
 }

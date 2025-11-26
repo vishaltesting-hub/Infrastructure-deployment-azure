@@ -19,7 +19,13 @@ module "networks" {
 module "compute" {
   source     = "../../modules/azure_compute"
   vms        = var.vms
-  depends_on = [module.networks]
+  depends_on = [module.networks,module.key_vault, module.public_ip]
+}
+
+module "public_ip" {
+  source     = "../../modules/azure_pip"
+  public_ip  = var.public_ip
+  depends_on = [module.resource_group]
 }
 
 #  The module at module.key_vault is a legacy module which contains its own local provider configurations, and so calls to it may not use
@@ -28,5 +34,5 @@ module "compute" {
 module "key_vault" {
   source = "../../modules/azure_key_vault"
   kvs    = var.kvs
-  depends_on = [module.resource_group]
+  depends_on = [module.resource_group, ]
 }

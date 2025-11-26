@@ -77,53 +77,75 @@ vnets = {
 
 vms = {
   vm1 = {
-    nic_name    = "dev-nic-1"
-    vm_name     = "dev-vm-1"
-    rg_name     = "rg-dev-1"
-    location    = "centralindia"
-    vm_size     = "Standard_B1s"
-    custom_data = filebase64("${path.module}/ngnix.sh")
-    tags = {
-      Owner       = "DevOps Team"
-      Environment = "Dev"
-      Project     = "infrastructure deployment"
-    }
-    disable_password_authentication = "false"
-    os_disk_caching                 = "ReadWrite"
-    os_disk_storage_account_type    = "Standard_LRS"
+    nic_name                 = "dev-nic-1"
+    vm_name                  = "dev-vm-1"
+    rg_name                  = "rg-dev-1"
+    location                 = "centralindia"
+    vm_size                  = "Standard_B1s"
+
+    subnet_name              = "dev-subnet-1"
+    vnet_name                = "dev-vnet-1"
+    public_ip_name           = "dev-public-ip-1"
+
+    kv_name                  = "dev-kv-10"
+    vm_username_secret_name  = "vm_username"
+    vm_password_secret_name  = "vm_password"
+
+    os_disk_caching              = "ReadWrite"
+    os_disk_storage_account_type = "Standard_LRS"
+
     source_image_reference = {
       publisher = "Canonical"
       offer     = "UbuntuServer"
       sku       = "18.04-LTS"
     }
-    subnet_name    = "dev-subnet-1"
-    vnet_name      = "dev-vnet-1"
-    public_ip_name = "dev-public-ip-1"
-    kv_name        = "dev-kv-1"
+
+    tags = {
+      Environment = "Dev"
+    }
   }
 }
 
-kvs = {
-  "kv_name" = {
-    name                = "dev-kv-1"
+public_ip = {
+  dev-public-ip-1 = {
+    name                = "dev-public-ip-1"
     resource_group_name = "rg-dev-1"
     location            = "centralindia"
-    sku_name            = "standard"
+    allocation_method   = "Dynamic"
+    sku                 = "Basic"
+
     tags = {
       Owner       = "DevOps Team"
       Environment = "Dev"
       Project     = "infrastructure deployment"
     }
+  }
+}
+
+kvs = {
+  devkv = {
+    name                = "dev-kv-10"
+    resource_group_name = "rg-dev-1"
+    location            = "centralindia"
+    sku_name            = "standard"
+
+    tags = {
+      Owner       = "DevOps Team"
+      Environment = "Dev"
+      Project     = "infrastructure deployment"
+    }
+
+    # simple map of secrets (key → { name, value })
     secrets = {
-      secret1= {
+      vm_username = {
         name  = "vm_username"
         value = "dev-vm-user"
       }
-      secret2= {
+
+      vm_password = {
         name  = "vm_password"
         value = "P@ssword1234"
+      }
     }
   }
-  }
-
-} 
+}
