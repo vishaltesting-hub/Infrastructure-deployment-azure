@@ -27,7 +27,7 @@ resource_group = {
 
 storage_account = {
   stg1 = {
-    name                     = "devstgacct1212wq"
+    name                     = "devstgacct1212p"
     resource_group_name      = "rg-dev-1"
     location                 = "centralindia"
     account_tier             = "Standard"
@@ -41,7 +41,7 @@ storage_account = {
 
   }
   stg2 = {
-    name                     = "devstgacct2121qw"
+    name                     = "devstgacct2121d"
     resource_group_name      = "rg-dev-2"
     location                 = "centralindia"
     account_tier             = "Standard"
@@ -77,19 +77,19 @@ vnets = {
 
 vms = {
   vm1 = {
-    nic_name                 = "dev-nic-1"
-    vm_name                  = "dev-vm-1"
-    rg_name                  = "rg-dev-1"
-    location                 = "centralindia"
-    vm_size                  = "Standard_B1s"
+    nic_name = "dev-nic-1"
+    vm_name  = "dev-vm-1"
+    rg_name  = "rg-dev-1"
+    location = "centralindia"
+    vm_size  = "Standard_B1s"
 
-    subnet_name              = "dev-subnet-1"
-    vnet_name                = "dev-vnet-1"
-    public_ip_name           = "dev-public-ip-1"
+    subnet_name    = "dev-subnet-1"
+    vnet_name      = "dev-vnet-1"
+    public_ip_name = "dev-public-ip-1"
 
-    kv_name                  = "dev-kv-10"
-    vm_username_secret_name  = "vm_username"
-    vm_password_secret_name  = "vm_password"
+    kv_name                 = "dev-kv-10"
+    vm_username_secret_name = "vm-username"
+    vm_password_secret_name = "vm-password"
 
     os_disk_caching              = "ReadWrite"
     os_disk_storage_account_type = "Standard_LRS"
@@ -111,8 +111,8 @@ public_ip = {
     name                = "dev-public-ip-1"
     resource_group_name = "rg-dev-1"
     location            = "centralindia"
-    allocation_method   = "Dynamic"
-    sku                 = "Basic"
+    allocation_method   = "Static"
+    sku                 = "Standard"
 
     tags = {
       Owner       = "DevOps Team"
@@ -138,14 +138,15 @@ kvs = {
     # simple map of secrets (key → { name, value })
     secrets = {
       vm_username = {
-        name  = "vm_username"
+        name  = "vm1-username"
         value = "dev-vm-user"
       }
 
       vm_password = {
-        name  = "vm_password"
+        name  = "vm1-password"
         value = "P@ssword1234"
       }
     }
+
   }
 }
