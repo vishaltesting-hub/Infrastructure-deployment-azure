@@ -91,3 +91,28 @@ vnets = {
     # }
   }
 }
+
+mssql_databases = {
+  mssqldb1 = {
+    name             = "prod-mssql-db1"
+    mssql_server_key = "mssqlserver1" # key from mssql_servers map
+    max_size_gb      = 2
+    sku_name         = "Basic"
+  }
+}
+
+mssql_servers = {
+  mssqlserver1 = {
+    name                   = "prod-mssql-server1"
+    resource_group_name    = "rg-prod-1"
+    location               = "centralindia"
+    version                = "12.0"
+    administrator_login    = "sqladminuser"
+    administrator_password = "P@ssw0rd1234"
+    tags = {
+      environment = "prod"
+      project     = "aks-infra"
+    }
+  }
+}
+

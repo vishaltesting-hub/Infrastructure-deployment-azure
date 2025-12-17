@@ -150,3 +150,28 @@ kvs = {
 
   }
 }
+
+mssql_databases = {
+  mssqldb1 = {
+    name             = "dev-mssql-db1"
+    mssql_server_key = "mssqlserver1" # key from mssql_servers map
+    max_size_gb      = 2
+    sku_name         = "Basic"
+  }
+}
+
+mssql_servers = {
+  mssqlserver1 = {
+    name                   = "dev-mssql-server1"
+    resource_group_name    = "dev-aks-rg1"
+    location               = "centralindia"
+    version                = "12.0"
+    administrator_login    = "sqladminuser"
+    administrator_password = "P@ssw0rd1234"
+    tags = {
+      environment = "dev"
+      project     = "aks-infra"
+    }
+  }
+}
+

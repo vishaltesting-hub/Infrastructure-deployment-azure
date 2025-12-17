@@ -1,3 +1,7 @@
+variable "subscription_id" {
+  description = "Optional Azure subscription id. Set to null or omit to use environment/CLI credentials (ARM_SUBSCRIPTION_ID or `az login`)."
+  default     = "2fe6adb6-b639-4804-8d25-87b437c9cbe6"
+}
 variable "resource_group" {
 
   type = map(object({
@@ -94,6 +98,30 @@ variable "kvs" {
       value = string
     })), {})
   }))
+}
+
+variable "mssql_databases" {
+  description = "A map of Azure MSSQL database configurations."
+  type = map(object({
+    name             = string
+    mssql_server_key = string
+    max_size_gb      = number
+    sku_name         = optional(string)
+  }))
+}
+
+variable "mssql_servers" {
+  description = "A map of Azure MySQL server configurations."
+  type = map(object({
+    name                   = string
+    resource_group_name    = string
+    location               = string
+    version                = string
+    administrator_login    = string
+    administrator_password = string
+    tags                   = optional(map(string))
+  }))
+
 }
 
 variable "subscription_id" {

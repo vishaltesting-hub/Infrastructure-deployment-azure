@@ -36,3 +36,16 @@ module "key_vault" {
   kvs    = var.kvs
   depends_on = [module.resource_group, ]
 }
+module "mssql_servers" {
+  source        = "../../modules/azure_mssql_server"
+  mssql_servers = var.mssql_servers
+  depends_on    = [module.aks_rg]
+
+}
+
+module "mssql_databases" {
+  source           = "../../modules/azure_mssql_db"
+  mssql_databases  = var.mssql_databases
+  mssql_server_ids = module.mssql_servers.mssql_server_ids
+  depends_on       = [module.mssql_servers]
+}
