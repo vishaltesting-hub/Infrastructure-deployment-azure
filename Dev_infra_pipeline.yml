@@ -72,10 +72,10 @@ stages:
           environmentServiceNameAzureRM: '$(SC)'
 
       - task: PublishPipelineArtifact@1
-            displayName: Publish Terraform Plan
-            inputs:
-              targetPath: '$(workDir)/tfplan.binary'
-              artifact: 'terraform-plan'
+        displayName: Publish Terraform Plan
+        inputs:
+          targetPath: '$(workDir)/tfplan.binary'
+          artifact: 'terraform-plan'
 
 
 - stage: SecurityScanning
