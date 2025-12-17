@@ -44,3 +44,23 @@ resource "azurerm_key_vault" "kv" {
     
   }
 }
+
+
+# Create Key Vault secrets from the provided kvs[*].secrets maps using an inline for_each
+resource "azurerm_key_vault_secret" "secrets" {
+  for_each = merge([
+    for kv_key, kv in var.kvs : {
+      for s_key, s in kv.secrets : "${kv_key}.${s_key}" => {
+        kv_key = kv_key
+        name   = s.name
+        value  = s.value
+      }
+    }
+  ]...)
+
+  name         = each.value.name
+  value        = each.value.value
+  key_vault_id = azurerm_key_vault.kv[each.value.kv_key].id
+
+  depends_on = [azurerm_key_vault.kv]
+}

@@ -81,15 +81,15 @@ vms = {
     vm_name  = "dev-vm-1"
     rg_name  = "rg-dev-1"
     location = "centralindia"
-    vm_size  = "Standard_B1s"
+    vm_size  = "Standard_D2s_v3"
 
     subnet_name    = "dev-subnet-1"
     vnet_name      = "dev-vnet-1"
     public_ip_name = "dev-public-ip-1"
 
     kv_name                 = "dev-kv-10"
-    vm_username_secret_name = "vm-username"
-    vm_password_secret_name = "vm-password"
+    vm_username_secret_name = "vm1-username"
+    vm_password_secret_name = "vm1-password"
 
     os_disk_caching              = "ReadWrite"
     os_disk_storage_account_type = "Standard_LRS"
