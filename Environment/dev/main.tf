@@ -34,12 +34,12 @@ module "public_ip" {
 module "key_vault" {
   source = "../../modules/azure_key_vault"
   kvs    = var.kvs
-  depends_on = [module.resource_group, ]
+  depends_on = [module.resource_group,]
 }
 module "mssql_servers" {
   source        = "../../modules/azure_mssql_server"
   mssql_servers = var.mssql_servers
-  depends_on    = [module.aks_rg]
+  depends_on    = [module.resource_group]
 
 }
 
