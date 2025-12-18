@@ -29,9 +29,6 @@ stages:
       pool: ci agent
 
       steps:
-      - script: |
-          curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
-        displayName: Install TFLint
 
       - script: |
           cd $(workDir)
@@ -58,6 +55,7 @@ stages:
           command: 'init'
           workingDirectory: '$(workDir)'
           backendServiceArm: '$(SC)'
+          backendAzureRmResourceGroupName: 'backend_rg'
           backendAzureRmStorageAccountName: 'adodevpipelinebackend'
           backendAzureRmContainerName: 'tfstate'
           backendAzureRmKey: '$(tfstateKey)'
@@ -136,6 +134,7 @@ stages:
           command: 'init'
           workingDirectory: '$(workDir)'
           backendServiceArm: '$(SC)'
+          backendAzureRmResourceGroupName: 'backend_rg'
           backendAzureRmStorageAccountName: 'adodevpipelinebackend'
           backendAzureRmContainerName: 'tfstate'
           backendAzureRmKey: '$(tfstateKey)'

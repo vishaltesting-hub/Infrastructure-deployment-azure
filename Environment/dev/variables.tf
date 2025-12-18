@@ -1,6 +1,7 @@
 variable "subscription_id" {
   description = "Optional Azure subscription id. Set to null or omit to use environment/CLI credentials (ARM_SUBSCRIPTION_ID or `az login`)."
   default     = "2fe6adb6-b639-4804-8d25-87b437c9cbe6"
+  type        = string
 }
 variable "resource_group" {
 
@@ -124,7 +125,3 @@ variable "mssql_servers" {
 
 }
 
-variable "subscription_id" {
-  description = "Optional Azure subscription id. Set to null or omit to use environment/CLI credentials (ARM_SUBSCRIPTION_ID or `az login`)."
-  default     = "2fe6adb6-b639-4804-8d25-87b437c9cbe6"
-}
