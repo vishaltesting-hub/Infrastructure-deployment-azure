@@ -34,7 +34,7 @@ module "public_ip" {
 module "key_vault" {
   source = "../../modules/azure_key_vault"
   kvs    = var.kvs
-  depends_on = [module.resource_group,]
+  depends_on = [module.resource_group]
 }
 module "mssql_servers" {
   source        = "../../modules/azure_mssql_server"
@@ -48,4 +48,10 @@ module "mssql_databases" {
   mssql_databases  = var.mssql_databases
   mssql_server_ids = module.mssql_servers.mssql_server_ids
   depends_on       = [module.mssql_servers]
+}
+
+module "load_balancer" {
+  source          = "../../modules/azure_lb"
+  load_balancers  = var.load_balancers
+  depends_on      = [module.public_ip, module.resource_group]
 }

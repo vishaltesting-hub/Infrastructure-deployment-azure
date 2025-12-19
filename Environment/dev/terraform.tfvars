@@ -120,6 +120,20 @@ public_ip = {
       Project     = "infrastructure deployment"
     }
   }
+pip_web = {
+    name                = "pip-web"
+    resource_group_name = "rg-dev-1"
+    location            = "centralindia"
+    allocation_method   = "Static"
+    sku                 = "Standard"
+
+    tags = {
+      Owner       = "DevOps Team"
+      Environment = "Dev"
+      Project     = "infrastructure deployment"
+    }
+  }
+
 }
 
 kvs = {
@@ -163,7 +177,7 @@ mssql_databases = {
 mssql_servers = {
   mssqlserver1 = {
     name                   = "dev-mssql-server1"
-    resource_group_name    = "dev-aks-rg1"
+    resource_group_name    = "rg-dev-1"
     location               = "centralindia"
     version                = "12.0"
     administrator_login    = "sqladminuser"
@@ -172,6 +186,23 @@ mssql_servers = {
       environment = "dev"
       project     = "aks-infra"
     }
+  }
+}
+
+
+load_balancers = {
+  lb-web1 = {
+    name                = "dev-lb-web1"
+    resource_group_name = "rg-dev-1"
+    location            = "centralindia"
+    sku               = "Standard"
+    public_ip_name    = "pip-web"
+    frontend_name     = "fe-web"
+    backend_pool_name = "be-web"
+    probe_name        = "tcp-probe"
+    rule_name         = "http-rule"
+    frontend_port     = 80
+    backend_port      = 80
   }
 }
 
